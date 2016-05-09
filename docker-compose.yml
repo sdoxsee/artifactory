@@ -1,0 +1,17 @@
+version: "2"
+services:
+  artifactorymaster:
+    image: jfrog-docker-reg2.bintray.io/jfrog/artifactory-oss:4.7.1
+    volumes:
+      - $ARTIFACTORY_HOME/data
+      - $ARTIFACTORY_HOME/logs
+      - $ARTIFACTORY_HOME/backup
+      - $ARTIFACTORY_HOME/etc
+    environment:
+      ARTIFACTORY_HOME: /var/opt/jfrog/artifactory
+  nginx:
+    build: nginx
+    ports:
+      - "80:81"
+    links:
+      - artifactorymaster:artifactory-master
